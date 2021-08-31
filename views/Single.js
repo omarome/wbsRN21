@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
 import {uploadsUrl} from '../utils/variables';
 import {DateTime} from 'luxon';
-
 const Single = ({route}) => {
   const {params} = route;
   return (

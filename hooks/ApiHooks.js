@@ -26,7 +26,7 @@ const useMedia = () => {
 
   const loadSingleMedia = async (id) => {
     try {
-      const tiedosto = await doFetch(baseUrl + 'media/' + id);
+      const tiedosto = await doFetch(baseUrl + 'media/' + id );
       return tiedosto;
     } catch (e) {
       console.log('loadSingleMedia', e.message);
