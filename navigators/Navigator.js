@@ -13,7 +13,6 @@ const Stack = createNativeStackNavigator();
 
 const TabScreen = () => {
   return (
-    // TODO: move content of <NavigationContainer> here
     <Tab.Navigator>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />

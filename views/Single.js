@@ -1,37 +1,43 @@
 import React from 'react';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
-import { StyleSheet, SafeAreaView, Text, Image } from 'react-native';
 import { uploadsUrl } from '../utils/variables';
 import { DateTime } from 'luxon';
+import { Card, ListItem, Text } from 'react-native-elements';
 
 const Single = ({ route }) => {
   const { params } = route;
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>{params.title}</Text>
-      <Image
-        style={{ width: 200, height: 200 }}
-        source={{ uri: uploadsUrl + params.filename }}
-      />
-      <Text>{params.description}</Text>
-      <Text>{params.user_id}</Text>
-      <Text>
+    <Card>
+      <Card.Title h4>{params.title}</Card.Title>
+      <Card.Title>
         {DateTime.fromISO(params.time_added)
           .setLocale('fi')
           .toLocaleString({ month: 'long', day: 'numeric', year: 'numeric' })}
-      </Text>
-      <Text>{params.media_type}</Text>
-    </SafeAreaView>
+      </Card.Title>
+      <Card.Divider />
+      <Card.Image
+        source={{ uri: uploadsUrl + params.filename }}
+        style={styles.image}
+        PlaceholderContent={<ActivityIndicator />}
+      />
+      <Card.Divider />
+      <Text style={styles.description}>{params.description}</Text>
+      <ListItem>
+        <Text>Ownername</Text>
+      </ListItem>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
+  image: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1,
+  },
+  description: {
+    marginBottom: 10,
   },
 });
 
