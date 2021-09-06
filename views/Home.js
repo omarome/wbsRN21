@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import List from '../components/List';
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.droidSafeArea}>
       <View style={styles.container}>
