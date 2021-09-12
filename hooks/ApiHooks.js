@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { doFetch } from '../utils/http';
-import { baseUrl } from '../utils/variables';
+import {useEffect, useState} from 'react';
+import {doFetch} from '../utils/http';
+import {baseUrl} from '../utils/variables';
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
@@ -34,7 +34,7 @@ const useMedia = () => {
     }
   };
 
-  return { mediaArray, loadMedia, loadSingleMedia };
+  return {mediaArray, loadMedia, loadSingleMedia};
 };
 
 const useLogin = () => {
@@ -42,8 +42,8 @@ const useLogin = () => {
     const requestOptions = {
       method: 'POST',
       // mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: userCredentials,
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(userCredentials),
     };
     try {
       const loginResponse = await doFetch(baseUrl + 'login', requestOptions);
@@ -52,28 +52,65 @@ const useLogin = () => {
       console.log('login error', error.message);
     }
   };
-  return { login };
+  return {login};
 };
 
 const useUser = () => {
   const checkToken = async (token) => {
     const options = {
       method: 'GET',
-      headers: { 'x-access-token': token },
+      headers: {'x-access-token': token},
     };
     try {
-      const userInfo = doFetch(baseUrl + 'users/user', options);
+      const userInfo = await doFetch(baseUrl + 'users/user', options);
       return userInfo;
     } catch (error) {
       console.log('checkToken error', error);
     }
   };
 
-  const register = async (token) => {
-    // https://media.mw.metropolia.fi/wbma/docs/#api-User-PostUser
+  const checkUsernameAvailable = async (username) => {
+    try {
+      const usernameInfo = await doFetch(
+        baseUrl + 'users/username/' + username
+      );
+      return usernameInfo.available;
+    } catch (error) {
+      console.log('checkUsername error', error);
+    }
   };
 
-  return { checkToken, register };
+  const register = async (userCredentials) => {
+    // https://media.mw.metropolia.fi/wbma/docs/#api-User-PostUser
+    const requestOptions = {
+      method: 'POST',
+      // mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(userCredentials),
+    };
+    try {
+      const registerResponse = await doFetch(baseUrl + 'users', requestOptions);
+      return registerResponse;
+    } catch (error) {
+      console.log('register error', error.message);
+    }
+  };
+
+  return {checkToken, register, checkUsernameAvailable};
 };
 
-export { useMedia, useLogin, useUser };
+const useTag = () => {
+  const getFilesByTag = async (tag) => {
+    try {
+      const tiedosto = await doFetch(baseUrl + 'tags/' + tag);
+      return tiedosto;
+    } catch (e) {
+      console.log('getFilesByTag', e.message);
+      return {};
+    }
+  };
+
+  return {getFilesByTag};
+};
+
+export {useMedia, useLogin, useUser, useTag};
