@@ -24,8 +24,10 @@
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
+    "react-native-validation": "^1.0.3",
     "react-native-web": "~0.13.12",
     "simple-react-validator": "^1.6.1",
+    "validate.js": "^0.13.1",
     "validator": "^13.6.0"
   },
   "devDependencies": {

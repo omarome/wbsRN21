@@ -1,3 +1,4 @@
+// adapted from function validate() in https://medium.com/@pavsidhu/validating-forms-in-react-native-7adc625c49cf
 import validate from 'validate.js';
 
 const validator = (field, value, constraints) => {
