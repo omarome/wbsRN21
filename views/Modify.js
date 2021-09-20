@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {View, ActivityIndicator, Alert} from 'react-native';
 import UploadForm from '../components/UploadForm';
@@ -11,28 +11,36 @@ const Modify = ({route}) => {
   const navigation = route.params.navigation;
   // const [image, setImage] = useState(require('../assets/icon.png'));
   const {inputs, handleInputChange, setInputs} = useUploadForm();
-  const {uploadMedia, loading} = useMedia();
+  const {modifyMedia, loading} = useMedia();
   const {update, setUpdate} = useContext(MainContext);
 
-  setInputs({
-    title: route.params.singleMedia.title,
-    description: route.params.singleMedia.description,
-  });
+  useEffect(() => {
+    (() => {
+      setInputs({
+        title: route.params.singleMedia.title,
+        description: route.params.singleMedia.description,
+      });
+    })();
+  }, []);
 
-  const doUpload = async () => {
+  const doModify = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
-      const result = await uploadMedia(inputs, userToken);
+      const result = await modifyMedia(
+        inputs,
+        userToken,
+        route.params.singleMedia.file_id
+      );
       if (result.message) {
         Alert.alert(
-          'Upload',
+          'Modify',
           result.message,
           [
             {
               text: 'Ok',
               onPress: () => {
                 setUpdate(update + 1);
-                navigation.navigate('Home');
+                navigation.navigate('My Files');
               },
             },
           ],
@@ -40,7 +48,7 @@ const Modify = ({route}) => {
         );
       }
     } catch (e) {
-      console.log('doUpload error', e.message);
+      console.log('doModify error', e.message);
     }
   };
 
@@ -48,9 +56,10 @@ const Modify = ({route}) => {
     <View>
       <UploadForm
         title="Upload"
-        handleSubmit={doUpload}
+        handleSubmit={doModify}
         handleInputChange={handleInputChange}
         loading={loading}
+        inputs={inputs}
       />
       {loading && <ActivityIndicator />}
     </View>

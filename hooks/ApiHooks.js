@@ -65,6 +65,27 @@ const useMedia = (ownFiles) => {
     }
   };
 
+  const modifyMedia = async (data, token, id) => {
+    try {
+      setLoading(true);
+      const options = {
+        method: 'PUT',
+        headers: {
+          'x-access-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      const result = await doFetch(baseUrl + 'media/' + id, options);
+      return result;
+    } catch (e) {
+      console.log('modifyMedia error', e);
+      throw new Error(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const deleteMedia = async (id, token) => {
     try {
       setLoading(true);
@@ -91,6 +112,7 @@ const useMedia = (ownFiles) => {
     loadSingleMedia,
     uploadMedia,
     deleteMedia,
+    modifyMedia,
   };
 };
 

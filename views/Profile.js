@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Card, ListItem} from 'react-native-elements';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
-import {Avatar} from 'react-native-elements/dist/avatar/Avatar';
+import {Avatar} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Profile = ({navigation}) => {
