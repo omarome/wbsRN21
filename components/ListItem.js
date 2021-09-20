@@ -1,34 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {uploadsUrl} from '../utils/variables';
-import {Avatar, ListItem as RNEListItem} from 'react-native-elements';
+import {Button, Input} from 'react-native-elements';
 
-const ListItem = ({singleMedia, navigation}) => {
-  console.log('singleMedia', singleMedia);
+const UploadForm = ({title, handleSubmit, handleInputChange, loading}) => {
   return (
-    <RNEListItem
-      bottomDivider
-      onPress={() => {
-        navigation.navigate('Single', singleMedia);
-      }}
-    >
-      <Avatar
-        size="large"
-        square
-        source={{uri: uploadsUrl + singleMedia.thumbnails.w160}}
-      ></Avatar>
-      <RNEListItem.Content>
-        <RNEListItem.Title h4>{singleMedia.title}</RNEListItem.Title>
-        <RNEListItem.Subtitle>{singleMedia.description}</RNEListItem.Subtitle>
-      </RNEListItem.Content>
-      <RNEListItem.Chevron />
-    </RNEListItem>
+    <>
+      <Input
+        autoCapitalize="none"
+        placeholder="title"
+        onChangeText={(txt) => handleInputChange('title', txt)}
+      />
+      <Input
+        autoCapitalize="none"
+        placeholder="description"
+        onChangeText={(txt) => handleInputChange('description', txt)}
+      />
+
+      <Button raised title={title} onPress={handleSubmit} loading={loading} />
+    </>
   );
 };
 
-ListItem.propTypes = {
-  singleMedia: PropTypes.object.isRequired,
-  navigation: PropTypes.object.isRequired,
+UploadForm.propTypes = {
+  title: PropTypes.string.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
-export default ListItem;
+export default UploadForm;
