@@ -12,6 +12,7 @@ const RegisterForm = ({navigation}) => {
 
   const doRegister = async () => {
     try {
+      delete inputs.confirmPassword;
       const registerInfo = await register(inputs);
       if (registerInfo) {
         Alert.alert(registerInfo.message);

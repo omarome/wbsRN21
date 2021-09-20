@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Input} from 'react-native-elements';
 
-const handleInputChange = () => {};
-
-const UploadForm = ({title, handleSubmit}) => {
+const UploadForm = ({title, handleSubmit, handleInputChange, loading}) => {
   return (
     <>
       <Input
@@ -18,7 +16,7 @@ const UploadForm = ({title, handleSubmit}) => {
         onChangeText={(txt) => handleInputChange('description', txt)}
       />
 
-      <Button raised title={title} onPress={handleSubmit} />
+      <Button raised title={title} onPress={handleSubmit} loading={loading} />
     </>
   );
 };
@@ -26,6 +24,8 @@ const UploadForm = ({title, handleSubmit}) => {
 UploadForm.propTypes = {
   title: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default UploadForm;
